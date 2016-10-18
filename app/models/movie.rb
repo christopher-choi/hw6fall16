@@ -8,11 +8,8 @@ class Movie::InvalidKeyError < StandardError ; end
     begin
       Tmdb::Api.key("f4702b08c0ac6ea5b51425788bb26562")
       movies = Array.new
-      search = Tmdb::Movie.find(string)
-      if search != nil
-        search.each do |a|
-          movies << {:tmdb_id => a.id, :title => a.title, :rating => self.get_rating(a.id), :release_date => a.release_date}
-        end
+      Tmdb::Movie.find(string).each do |a|
+        movies << {:tmdb_id => a.id, :title => a.title, :rating => self.get_rating(a.id), :release_date => a.release_date}
       end
       movies
     rescue Tmdb::InvalidApiKeyError
